@@ -1,5 +1,9 @@
 import csv, re, sys
 
+if len(sys.argv) == 1:
+    print('File to parse not specified.')
+    sys.exit(1)
+
 inputFile = sys.argv[1]
 
 with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
