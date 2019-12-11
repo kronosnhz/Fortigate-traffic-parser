@@ -25,7 +25,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
             try:
                 raw = row["raw"]
             except IndexError:
-                print "Raw column doesn't exist!"
+                print ("Raw column doesn't exist!")
                 sys.exit(1)
 
             # Attributes to find
