@@ -13,10 +13,13 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
             if line_count == 0:
                 print(f'Column names are {", ".join(row)}')
                 print('Processing file, please wait...')
+                
+                # Header column
                 csv_writer.writerow(['srcip', 'srcport', 'dstip', 'dstport', 'service'])
                 line_count +=1
             raw = row["raw"]
 
+            # Attributes to find
             dstip = re.search(r'\b(\w*dstip\S*)\b', raw)
             if dstip is None:
                 dstip = '0'
@@ -37,6 +40,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
             if service is None:
                 service = '0'
             
+            # Write attributes row
             csv_writer.writerow([srcip[0], srcport[0], dstip[0], dstport[0], service[0]])
             
             line_count +=1
