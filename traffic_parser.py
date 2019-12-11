@@ -21,7 +21,12 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 # Header column
                 csv_writer.writerow(['srcip', 'srcport', 'dstip', 'dstport', 'service'])
                 line_count +=1
-            raw = row["raw"]
+            
+            try:
+                raw = row["raw"]
+            except IndexError:
+                print "Raw column doesn't exist!"
+                sys.exit(1)
 
             # Attributes to find
             dstip = re.search(r'\b(\w*dstip\S*)\b', raw)
