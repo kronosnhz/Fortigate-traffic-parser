@@ -19,7 +19,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 print('Processing file, please wait...')
                 
                 # Header column
-                csv_writer.writerow(['srcip', 'srcport', 'srcname', 'srcintf','devtype', 'osname', 'dstip', 'dstport', 'dstintf', 'service', 'policyid'])
+                csv_writer.writerow(['devname', 'srcip', 'srcport', 'srcname', 'srcintf','devtype', 'osname', 'dstip', 'dstport', 'dstintf', 'service', 'policyid'])
                 line_count +=1
             
             try:
@@ -29,6 +29,10 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 sys.exit(1)
 
             # Attributes to find
+            devname = re.search(r'\b(\w*devname\S*)\B', raw)
+            if devname is None:
+                devname = '0'
+
             srcip = re.search(r'\b(\w*srcip\S*)\b', raw)
             if srcip is None:
                 srcip = '0'
@@ -37,19 +41,19 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
             if srcport is None:
                 srcport = '0'
 
-            srcname = re.search(r'\b(\w*srcname\S*)\b', raw)
+            srcname = re.search(r'\b(\w*srcname\S*)\B', raw)
             if srcname is None:
                 srcname = '0'
 
-            srcintf = re.search(r'\b(\w*srcintf\S*)\b', raw)
+            srcintf = re.search(r'\b(\w*srcintf\S*)\B', raw)
             if srcintf is None:
                 srcintf = '0'
 
-            devtype = re.search(r'\b(\w*devtype\S*)\b', raw)
+            devtype = re.search(r'\b(\w*devtype\S*)\B', raw)
             if devtype is None:
                 devtype = '0'
             
-            osname = re.search(r'\b(\w*osname\S*)\b', raw)
+            osname = re.search(r'\b(\w*osname\S*)\B', raw)
             if osname is None:
                 osname = '0'
 
@@ -61,7 +65,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
             if dstport is None:
                 dstport = '0'
 
-            dstintf = re.search(r'\b(\w*dstintf\S*)\b', raw)
+            dstintf = re.search(r'\b(\w*dstintf\S*)\B', raw)
             if dstintf is None:
                 dstintf = '0'
             
@@ -74,7 +78,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 policyid = '0'
             
             # Write attributes row
-            csv_writer.writerow([srcip[0], srcport[0], srcname[0], srcintf[0], devtype[0], osname[0], dstip[0], dstport[0], dstintf[0], service[0], policyid[0]])
+            csv_writer.writerow([devname[0], srcip[0], srcport[0], srcname[0], srcintf[0], devtype[0], osname[0], dstip[0], dstport[0], dstintf[0], service[0], policyid[0]])
             
             line_count +=1
 
