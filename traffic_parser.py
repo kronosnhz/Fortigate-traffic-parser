@@ -11,7 +11,8 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
 
     with open(inputFile, mode='r') as traffic_file:
         csv_reader = csv.DictReader(traffic_file, delimiter=';')
-        
+        columns = ['devname', 'srcip', 'srcport', 'srcname', 'srcintf','devtype', 'osname', 'dstip', 'dstport', 'dstintf', 'service', 'policyid']
+
         line_count = 0
         for row in csv_reader:
             if line_count == 0:
@@ -19,7 +20,7 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 print('Processing file, please wait...')
                 
                 # Header column
-                csv_writer.writerow(['devname', 'srcip', 'srcport', 'srcname', 'srcintf','devtype', 'osname', 'dstip', 'dstport', 'dstintf', 'service', 'policyid'])
+                csv_writer.writerow(columns)
                 line_count +=1
             
             try:
@@ -29,56 +30,16 @@ with open(inputFile + '_parsed.csv', mode='w', newline='') as trafico_parsed:
                 sys.exit(1)
 
             # Attributes to find
-            devname = re.search(r'\b(\w*devname\S*)\B', raw)
-            if devname is None:
-                devname = '0'
+            rowValues = []
 
-            srcip = re.search(r'\b(\w*srcip\S*)\b', raw)
-            if srcip is None:
-                srcip = '0'
-            
-            srcport = re.search(r'\b(\w*srcport\S*)\b', raw)
-            if srcport is None:
-                srcport = '0'
-
-            srcname = re.search(r'\b(\w*srcname\S*)\B', raw)
-            if srcname is None:
-                srcname = '0'
-
-            srcintf = re.search(r'\b(\w*srcintf\S*)\B', raw)
-            if srcintf is None:
-                srcintf = '0'
-
-            devtype = re.search(r'\b(\w*devtype\S*)\B', raw)
-            if devtype is None:
-                devtype = '0'
-            
-            osname = re.search(r'\b(\w*osname\S*)\B', raw)
-            if osname is None:
-                osname = '0'
-
-            dstip = re.search(r'\b(\w*dstip\S*)\b', raw)
-            if dstip is None:
-                dstip = '0'
-
-            dstport = re.search(r'\b(\w*dstport\S*)\b', raw)
-            if dstport is None:
-                dstport = '0'
-
-            dstintf = re.search(r'\b(\w*dstintf\S*)\B', raw)
-            if dstintf is None:
-                dstintf = '0'
-            
-            service = re.search(r'\b(\w*service\S*)\B', raw)
-            if service is None:
-                service = '0'
-
-            policyid = re.search(r'\b(\w*policyid\S*)\B', raw)
-            if policyid is None:
-                policyid = '0'
+            for column in columns:
+                columnValue = re.search(r'\b(\w*' + re.escape(column) + r'\S*)\b', raw)
+                if columnValue is None:
+                    columnValue = '0'
+                rowValues.append(columnValue[0])
             
             # Write attributes row
-            csv_writer.writerow([devname[0], srcip[0], srcport[0], srcname[0], srcintf[0], devtype[0], osname[0], dstip[0], dstport[0], dstintf[0], service[0], policyid[0]])
+            csv_writer.writerow(rowValues)
             
             line_count +=1
 
