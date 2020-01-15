@@ -12,4 +12,4 @@ Python 3 [Official Download](https://www.python.org/downloads/)
 The script will create a new file ending with `_parsed.csv` with the most relevant fields.
 
 ## How to add/remove fields to be parsed
-By default the script is made to extract only a few attributes but it can be customized with other fields. Copy the lines where those are found using regex and change the attribute to find,also remember to add the column label in the generation of the header row.
+By default the script is made to extract only a few attributes but it can be customized with other fields. Add or remove attributes to parse in the column variable.
